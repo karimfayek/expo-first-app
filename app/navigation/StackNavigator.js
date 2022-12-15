@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home } from "../Home";
 import Login from "../Login";
 import Contact from "../screens/Contact";
+import Product from "../screens/Product";
+import Cart from "../screens/Cart";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +23,8 @@ const MainStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="HomeMain" component={Home} />
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Product" component={Product} />
+      <Stack.Screen name="Cart" component={Cart} />
     </Stack.Navigator>
   );
 }

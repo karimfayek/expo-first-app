@@ -6,9 +6,9 @@
  */
 
  import axios from 'axios';
-import React , {Component} from 'react';
+import React , {Component , useState} from 'react';
 import Categories from './screens/Categories';
-import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
  import {
    StyleSheet,
@@ -18,7 +18,8 @@ import { useState } from 'react';
    FlatList,
    ScrollView,
    Image,
-   SafeAreaView
+   SafeAreaView,
+   ImageBackground
  } from 'react-native';
  
  import { Header } from './screens/Header';
@@ -35,13 +36,14 @@ import { useState } from 'react';
 
          {/* Sections */}
          <HomeSection  TextRight ={'Trending'} />  
+         
 
     </ScrollView>
   </SafeAreaView>
   )
   
  }
- export  function HomeSection({TextRight}) {
+ export  function HomeSection({TextRight , OnPress}) {
 
   
   return (
@@ -59,17 +61,16 @@ import { useState } from 'react';
 
       <View style = {styles.homeSectionImages}>
 
-         <Getproducts />
-
+      <Getproducts OnPress={OnPress} />
           
       </View>
     </>
   );
 }
 
-export  function Getproducts() {
+const Getproducts = () => {
   const [products, setProducts] = React.useState(null);
-
+  const navigation = useNavigation();
   React.useEffect(() => {
     axios.get(`https://fakestoreapi.com/products?limit=10`).then((response) => {
 
@@ -77,54 +78,32 @@ export  function Getproducts() {
     });
   }, []);
   if (!products) return null;
-
-
   return (
      <FlatList  horizontal showsHorizontalScrollIndicator   data={products}  ItemSeparatorComponent= {() => <View style={{padding: 10}} />}
-                  renderItem=
-                  { ({item}) =>{
-                    const image = item.image;
-                    
-  if (!item) return null;
-                    return(
-                      <TouchableOpacity key = {item.id}>
-                              <Image  style={styles.product} source={{uri: image}}/> 
-                              <Text style={{ width:150}}>{item.title}</Text>
-                              </TouchableOpacity>  
-                       )
-                     }
-                  }
-            />            
+          
+          renderItem={ ({item}) => {
+            const image = item.image;
+          
+            return (
+                <View key={item.id} style={{alignItems: 'center'}}>
+                  <TouchableOpacity onPress={ () => navigation.navigate('Product' , {
+                        id: item.id,
+                        title: item.title,
+                        price: item.price,
+                        img: item.image,
+                    }) }>
+                    <ImageBackground source={{uri: image}}  style={styles.product}   > 
+                      <Text style={styles.text}>{item.title}</Text>
+                     </ImageBackground>
+                  </TouchableOpacity>
+                  
+                </View>
+              );
+            
+          }
+          }
+      />            
   );
-}
-export class Getproductss extends React.Component {
-  constructor(){
-
-  }
-  state = {
-    products: []
-  };
-  
-  componentDidMount() {
-    axios.get(`https://api.escuelajs.co/api/v1/products?offset=0&limit=2`)
-      .then(res => {
-        const products =  res.data; 
-        this.setState({ products }); 
-      })
-  };
-render(){
-  return (
-    
-    this.state.products.map(product => {
-      <>
-
-<Image source={{uri : product.images}} /> 
-      <Text>{ product.category.name}</Text>
-      </>
-    })
-  )
-}
-
 }
 const styles = {
 
@@ -140,8 +119,19 @@ const styles = {
       height: 50,
     },
     product: {
-      width: 150,
-      height: 300,
+      width : 'auto',
+      height : 300,
+    justifyContent: "flex-end",
+    borderRadius: 50
+    },
+    text: {
+      color: "white",
+      fontSize: 12,
+      lineHeight: 20,
+      fontWeight: "bold",
+      textAlign: "center",
+      backgroundColor: "#000000c0",
+      width: 150
     },
     homesectionHead: {
     paddingVertical: 25,
@@ -156,6 +146,8 @@ const styles = {
     flexDirection : 'row' ,
     justifyContent : 'space-between',
     paddingHorizontal : 5 ,
+    paddingVertical: 20,
+    backgroundColor: "gold",
     }
 }
 
