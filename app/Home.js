@@ -72,17 +72,17 @@ const Getproducts = () => {
   const [products, setProducts] = React.useState(null);
   const navigation = useNavigation();
   React.useEffect(() => {
-    axios.get(`https://fakestoreapi.com/products?limit=10`).then((response) => {
+    axios.get(`http://beka.trustits.net/api/products`).then((response) => {
 
-      setProducts(response.data);
+      setProducts(response.data.products);
+      console.log(products)
     });
   }, []);
-  if (!products) return null;
+  //console.log(products)
   return (
      <FlatList  horizontal showsHorizontalScrollIndicator   data={products}  ItemSeparatorComponent= {() => <View style={{padding: 10}} />}
           
           renderItem={ ({item}) => {
-            const image = item.image;
           
             return (
                 <View key={item.id} style={{alignItems: 'center'}}>
@@ -90,10 +90,10 @@ const Getproducts = () => {
                         id: item.id,
                         title: item.title,
                         price: item.price,
-                        img: item.image,
+                        img: item.images[0].full,
                     }) }>
-                    <ImageBackground source={{uri: image}}  style={styles.product}   > 
-                      <Text style={styles.text}>{item.title}</Text>
+                    <ImageBackground source={{uri: 'http://beka.trustits.net/storage/products/mobile_photos/' + item.images[0].full}}  style={styles.product}   > 
+                      <Text style={styles.text}>{item.name}</Text>
                      </ImageBackground>
                   </TouchableOpacity>
                   

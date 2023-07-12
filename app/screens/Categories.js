@@ -20,9 +20,6 @@ const Categories = ({ OnPress }) => {
                   <View key={index} style={{alignItems: 'center'}}>
                     <TouchableOpacity
                       onPress={OnPress}
-                      rippleColor={appColors.primary}
-                      rippleContainerBorderRadius={20}
-                      rippleDuration={800}
                       style={{
                         ...shadow,
                         backgroundColor: appColors.yellow,

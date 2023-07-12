@@ -53,6 +53,7 @@ export const SIZES= {
 };
 
 export const FONTS = {
+ 
   // export const FONTS = {
   navTitle: { fontFamily: 'CarmenSans-Thin', fontSize: SIZES.navTitle },
   largeTitleBold: { fontFamily: 'CarmenSans-SemiBold', fontSize: SIZES.h2 },
@@ -98,7 +99,6 @@ export const FONTS = {
     lineHeight: 22,
   },
   cart_text: {
-    fontFamily: 'Rubik-ExtraBold',
     fontSize: 18,
     lineHeight: 20,
     fontWeight: '400',
@@ -110,7 +110,7 @@ export const FONTS = {
     fontWeight: '400',
   },
   product_sub_title_text: {
-    fontFamily: 'Rubik-SemiBold',
+    //fontFamily: 'Rubik-SemiBold',
     fontSize: 16,
     lineHeight: 22,
   },
